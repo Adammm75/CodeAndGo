@@ -1,0 +1,134 @@
+/* Écrans d'état : 404, erreur et chargement. */
+
+.screen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 78svh;
+  display: flex;
+  align-items: center;
+  padding-top: calc(var(--header-h) + 3rem);
+  padding-bottom: 5rem;
+}
+
+.halo {
+  width: 560px;
+  height: 560px;
+  top: -20%;
+  right: -14%;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.code {
+  font-family: var(--font-serif);
+  font-size: clamp(4.5rem, 15vw, 10rem);
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+  user-select: none;
+}
+
+.title {
+  font-size: clamp(2rem, 5.2vw, 3.6rem);
+  max-width: 18ch;
+}
+
+.text {
+  max-width: 52ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 0.4rem;
+}
+
+.nav {
+  width: 100%;
+  padding-top: 1.75rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.link {
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: color 0.3s var(--ease);
+}
+
+.link:hover {
+  color: var(--cyan);
+}
+
+.digest {
+  font-size: 0.8rem;
+  color: var(--muted-dim);
+}
+
+/* --- Chargement --- */
+
+.loading {
+  min-height: 62svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: var(--header-h);
+}
+
+.loadingTrack {
+  width: min(220px, 60vw);
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.loadingBar {
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--gradient);
+  animation: slide 1.25s var(--ease) infinite;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(360%);
+  }
+}
+
+.loadingText {
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loadingBar {
+    animation: none;
+    width: 100%;
+  }
+}

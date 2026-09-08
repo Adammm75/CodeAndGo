@@ -1,0 +1,296 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(var(--header-h) + 2.5rem);
+  padding-bottom: 5.5rem;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%, rgba(52, 120, 255, 0.16), transparent 60%),
+    var(--bg);
+}
+
+.haloLeft {
+  width: 620px;
+  height: 620px;
+  top: -14%;
+  left: -16%;
+}
+
+.haloRight {
+  width: 680px;
+  height: 680px;
+  bottom: -26%;
+  right: -18%;
+}
+
+/* Grand mot fantôme en arrière-plan. */
+.ghost {
+  position: absolute;
+  left: 50%;
+  bottom: -1%;
+  transform: translateX(-50%);
+  z-index: -1;
+  font-family: var(--font-serif);
+  font-size: clamp(5rem, 19vw, 17rem);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.032);
+  user-select: none;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(3rem, 6vw, 4.5rem);
+  align-items: center;
+  width: 100%;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.35rem;
+  max-width: 44rem;
+}
+
+/* Le titre du héros est l'élément de contenu le plus grand de la page :
+   c'est lui que le navigateur mesure pour le « plus grand affichage ». Toute
+   la cascade est donc restée volontairement courte. */
+.badge,
+.label,
+.title,
+.intro,
+.actions,
+.expertises {
+  opacity: 0;
+  animation: heroIn 0.55s var(--ease-out) forwards;
+}
+
+.badge {
+  animation-delay: 0.06s;
+}
+
+.label {
+  animation-delay: 0.11s;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  animation-delay: 0.16s;
+  margin-block: -0.25rem;
+  /* Calibré pour tenir en deux lignes dans la colonne de gauche. */
+  font-size: clamp(2.25rem, 4.25vw, 3.65rem);
+}
+
+.intro {
+  animation-delay: 0.22s;
+}
+
+.actions {
+  animation-delay: 0.28s;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+.expertises {
+  animation-delay: 0.34s;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.6rem;
+}
+
+/* Sans `filter: blur()` : le flou rendait le titre illisible pendant la
+   première demi-seconde et forçait une passe de rendu hors écran. */
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.expertise {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  font-size: 0.82rem;
+  color: var(--muted);
+  transition:
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.expertise:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--glass-strong);
+  transform: translateY(-2px);
+}
+
+.expertiseDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--cyan);
+}
+
+.expertises li:nth-child(2) .expertiseDot {
+  background: var(--blue);
+}
+
+.expertises li:nth-child(3) .expertiseDot {
+  background: var(--violet);
+}
+
+.expertises li:nth-child(4) .expertiseDot {
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+
+.visual {
+  opacity: 0;
+  animation: visualIn 0.7s var(--ease-out) 0.24s forwards;
+}
+
+@keyframes visualIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Invitation au défilement --- */
+
+.scrollHint {
+  position: absolute;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  display: none;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+  transition: color 0.3s var(--ease);
+}
+
+.scrollHint:hover {
+  color: var(--muted);
+}
+
+.scrollTrack {
+  display: grid;
+  place-items: start center;
+  width: 20px;
+  height: 32px;
+  padding-top: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+}
+
+.scrollDot {
+  width: 3px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--cyan);
+  animation: scrollDot 2s var(--ease) infinite;
+}
+
+@keyframes scrollDot {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  55% {
+    transform: translateY(10px);
+    opacity: 0.15;
+  }
+}
+
+/* --- Points de rupture --- */
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .scrollHint {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--header-h) + 2rem);
+    padding-bottom: 3.5rem;
+  }
+
+  .ghost {
+    font-size: 26vw;
+    bottom: 22%;
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge,
+  .label,
+  .title,
+  .intro,
+  .actions,
+  .expertises,
+  .visual {
+    opacity: 1;
+    animation: none;
+  }
+
+  .scrollDot {
+    animation: none;
+  }
+}
+
+/* Les pastilles d'expertise sont des liens : elles doivent rester confortables
+   à viser au doigt. */
+@media (pointer: coarse) {
+  .expertise {
+    padding: 0.72rem 1.05rem;
+  }
+
+  .expertise:hover {
+    transform: none;
+  }
+}

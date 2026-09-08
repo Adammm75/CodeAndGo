@@ -1,0 +1,147 @@
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section > :global(.halo) {
+  width: 560px;
+  height: 560px;
+  top: 20%;
+  left: -20%;
+  opacity: 0.28;
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+/* --- Colonne éditoriale --- */
+
+.sticky {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.title {
+  max-width: 16ch;
+}
+
+.lead {
+  max-width: 42ch;
+}
+
+/* --- Lignes interactives --- */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(0.9rem, 2vw, 1.6rem);
+  padding: clamp(1.15rem, 2.4vw, 1.6rem) 0.4rem;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Décalage au survol par `transform` (composité) plutôt que par `padding`,
+   qui déclencherait un recalcul de mise en page à chaque frame. */
+.rowIndex,
+.rowBody {
+  transition: transform 0.4s var(--ease);
+}
+
+.row:hover .rowIndex,
+.row:hover .rowBody,
+.row:focus-within .rowIndex,
+.row:focus-within .rowBody {
+  transform: translateX(0.7rem);
+}
+
+/* Balayage lumineux au survol. */
+.sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(32, 216, 243, 0.055) 35%,
+    rgba(146, 80, 255, 0.055) 65%,
+    transparent 100%
+  );
+  transform: translateX(-102%);
+  transition: transform 0.85s var(--ease-out);
+}
+
+.row:hover .sweep,
+.row:focus-within .sweep {
+  transform: translateX(0);
+}
+
+.rowIndex {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--muted-dim);
+  padding-top: 0.35rem;
+  transition: color 0.4s var(--ease);
+}
+
+.row:hover .rowIndex {
+  color: var(--cyan);
+}
+
+.rowBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.rowTitle {
+  color: var(--text);
+}
+
+.rowText {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 54ch;
+  text-wrap: pretty;
+}
+
+@media (min-width: 980px) {
+  .inner {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .sticky {
+    position: sticky;
+    top: calc(var(--header-h) + 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sweep {
+    display: none;
+  }
+
+  .row:hover .rowIndex,
+  .row:hover .rowBody,
+  .row:focus-within .rowIndex,
+  .row:focus-within .rowBody {
+    transform: none;
+  }
+}

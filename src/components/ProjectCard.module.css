@@ -1,0 +1,183 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: linear-gradient(170deg, var(--surface-2), var(--surface));
+  overflow: hidden;
+  transition:
+    border-color 0.5s var(--ease),
+    box-shadow 0.5s var(--ease),
+    transform 0.5s var(--ease-out);
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg), 0 0 60px -34px rgba(52, 120, 255, 0.9);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: clamp(1.15rem, 2.5vw, 1.75rem);
+  border-top: 1px solid var(--border);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.category {
+  color: var(--cyan);
+  letter-spacing: 0.06em;
+}
+
+.sep,
+.year {
+  color: var(--muted-dim);
+}
+
+.demo {
+  margin-left: auto;
+}
+
+/* La carte entière est cliquable via `.link::after` (z-index 1) : ce lien doit
+   passer au-dessus pour rester atteignable. */
+.live {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-left: auto;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--glass);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.live:hover {
+  color: var(--text);
+  border-color: var(--cyan);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(32, 216, 243, 0.16);
+}
+
+@media (pointer: coarse) {
+  .live {
+    min-height: 44px;
+    padding-inline: 0.95rem;
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  transition: color 0.35s var(--ease);
+}
+
+/* Zone cliquable étendue à toute la carte, sans dupliquer le lien. */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.card:hover .link {
+  color: var(--cyan);
+}
+
+.arrow {
+  flex: none;
+  color: var(--muted-dim);
+  transition: transform 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.card:hover .arrow {
+  transform: translate(2px, -2px);
+  color: var(--cyan);
+}
+
+.summary {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+/* --- Grand format --- */
+
+@media (min-width: 900px) {
+  .featured .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'meta meta'
+      'title summary'
+      'title tech';
+    column-gap: clamp(1.5rem, 4vw, 3rem);
+    row-gap: 0.85rem;
+    align-items: start;
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+  }
+
+  .featured .meta {
+    grid-area: meta;
+  }
+
+  .featured .title {
+    grid-area: title;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+  }
+
+  .featured .summary {
+    grid-area: summary;
+    font-size: 1rem;
+  }
+
+  .featured .tech {
+    grid-area: tech;
+    align-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .card:focus-within {
+    transform: none;
+  }
+}

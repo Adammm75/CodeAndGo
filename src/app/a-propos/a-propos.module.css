@@ -1,0 +1,135 @@
+/* --- Manifeste --- */
+
+.manifesto {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.conviction {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(1rem, 3vw, 2.25rem);
+  padding-block: clamp(1.25rem, 2.6vw, 1.8rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.conviction p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.42;
+  letter-spacing: -0.008em;
+  color: var(--text);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.convictionIndex {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  padding-top: 0.55rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- Valeurs --- */
+
+.values {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.value {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: clamp(1.15rem, 2.4vw, 1.6rem);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease);
+}
+
+.value:hover {
+  border-color: var(--border-strong);
+  background: var(--glass-strong);
+}
+
+.valueTitle {
+  color: var(--text);
+}
+
+.valueText {
+  font-size: 0.9rem;
+  line-height: 1.58;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* --- Coordonnées --- */
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(1.25rem, 2.6vw, 1.75rem);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(165deg, var(--surface-2), var(--surface));
+  text-align: center;
+  align-items: center;
+}
+
+.contactLabel {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.contactValue {
+  font-size: 1rem;
+  color: var(--text);
+  transition: color 0.3s var(--ease);
+  overflow-wrap: anywhere;
+}
+
+a.contactValue:hover {
+  color: var(--cyan);
+}
+
+@media (min-width: 700px) {
+  .values {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contactGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1040px) {
+  .values {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Telephone et e-mail : les deux liens les plus utiles de la page. */
+@media (pointer: coarse) {
+  .contactValue {
+    display: inline-block;
+    padding-block: 0.58rem;
+  }
+}

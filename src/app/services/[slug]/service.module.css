@@ -1,0 +1,227 @@
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.25rem, 5vw, 4rem);
+  align-items: start;
+}
+
+/* --- Colonne principale --- */
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.intro {
+  font-size: clamp(1.02rem, 1.5vw, 1.16rem);
+  line-height: 1.68;
+  color: var(--muted);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.sectionTitle {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-top: 0.75rem;
+}
+
+.approach {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.approachItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+  padding-block: 1.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.approachIndex {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--muted-dim);
+  padding-top: 0.3rem;
+}
+
+.approachTitle {
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+
+.approachText {
+  font-size: 0.94rem;
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+/* --- Colonne latérale --- */
+
+.asideWrap {
+  position: sticky;
+  top: calc(var(--header-h) + 2.5rem);
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  padding: clamp(1.4rem, 3vw, 1.9rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 90% 50% at 50% 0%, rgba(52, 120, 255, 0.1), transparent 60%),
+    linear-gradient(165deg, var(--surface-2), var(--surface));
+  box-shadow: var(--shadow-md);
+}
+
+.asideBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.asideBlock + .asideBlock {
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--border);
+}
+
+.asideTitle {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.asideText {
+  font-size: 0.92rem;
+  line-height: 1.58;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.objective {
+  align-self: flex-start;
+  padding: 0.32rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(32, 216, 243, 0.28);
+  background: rgba(32, 216, 243, 0.07);
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.deliverables {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.15rem;
+}
+
+.deliverable {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.check {
+  margin-top: 0.26rem;
+  flex: none;
+  color: var(--cyan);
+}
+
+/* --- Autres prestations --- */
+
+.othersTitle {
+  margin-bottom: 1.35rem;
+}
+
+.others {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.otherLink {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  color: var(--muted);
+  transition:
+    color 0.32s var(--ease),
+    border-color 0.32s var(--ease),
+    background-color 0.32s var(--ease),
+    transform 0.32s var(--ease);
+}
+
+.otherLink:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--glass-strong);
+  transform: translateY(-2px);
+}
+
+.otherIndex {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--muted-dim);
+}
+
+.otherTitle {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 500;
+}
+
+.otherArrow {
+  margin-left: auto;
+  color: var(--muted-dim);
+  transition: transform 0.32s var(--ease);
+}
+
+.otherLink:hover .otherArrow {
+  transform: translateX(3px);
+  color: var(--cyan);
+}
+
+@media (min-width: 980px) {
+  .layout {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  }
+
+  .others {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 979px) {
+  .asideWrap {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otherLink:hover {
+    transform: none;
+  }
+}

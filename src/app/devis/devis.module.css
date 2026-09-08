@@ -1,0 +1,120 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4.5vw, 3.5rem);
+  align-items: start;
+}
+
+.form {
+  min-width: 0;
+}
+
+.asideWrap {
+  position: sticky;
+  top: calc(var(--header-h) + 2.5rem);
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: clamp(1.4rem, 3vw, 1.9rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: linear-gradient(165deg, var(--surface-2), var(--surface));
+}
+
+.asideTitle {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+}
+
+.step p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.stepIndex {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  padding-top: 0.18rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.direct {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--border);
+}
+
+.directTitle {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+  margin-bottom: 0.25rem;
+}
+
+.directLink {
+  font-size: 0.95rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  transition: color 0.3s var(--ease);
+}
+
+.directLink:hover {
+  color: var(--cyan);
+}
+
+.privacy {
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--muted-dim);
+  text-wrap: pretty;
+}
+
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.5fr);
+  }
+}
+
+@media (max-width: 999px) {
+  .asideWrap {
+    position: static;
+  }
+}
+
+/* Contact direct depuis la colonne laterale. */
+@media (pointer: coarse) {
+  .directLink {
+    display: inline-block;
+    padding-block: 0.58rem;
+  }
+}

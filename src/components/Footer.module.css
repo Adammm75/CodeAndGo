@@ -1,0 +1,192 @@
+.footer {
+  position: relative;
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+  background: var(--bg-deep);
+  border-top: 1px solid var(--border);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.25rem, 5vw, 4rem);
+  padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+/* --- Bloc marque --- */
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 34rem;
+}
+
+.pitch {
+  font-size: 0.92rem;
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+
+.signature {
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  font-size: 0.82rem;
+  color: var(--muted);
+  transition:
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease);
+}
+
+.social:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--glass-strong);
+}
+
+/* --- Colonnes de liens --- */
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem 1.5rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.columnTitle {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.link {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: color 0.3s var(--ease);
+}
+
+.link:hover {
+  color: var(--cyan);
+}
+
+/* Grille plutôt que flex : la colonne de texte peut se réduire sous sa
+   largeur intrinsèque, ce qui permet à une adresse e-mail longue de passer à
+   la ligne au lieu d'élargir le document. */
+.contact {
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.area {
+  font-size: 0.82rem;
+  color: var(--muted-dim);
+}
+
+/* --- Bandeau bas --- */
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.copy {
+  font-size: 0.8rem;
+  color: var(--muted-dim);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.legalLink {
+  font-size: 0.8rem;
+  color: var(--muted-dim);
+  transition: color 0.3s var(--ease);
+}
+
+.legalLink:hover {
+  color: var(--muted);
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* Au doigt, les listes de liens du pied de page deviennent des cibles pleines. */
+@media (pointer: coarse) {
+  .links {
+    gap: 0.15rem;
+  }
+
+  .link {
+    padding-block: 0.6rem;
+  }
+
+  .social {
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .legal {
+    gap: 0.15rem 1.25rem;
+  }
+
+  .legalLink {
+    display: inline-block;
+    padding-block: 0.7rem;
+  }
+}

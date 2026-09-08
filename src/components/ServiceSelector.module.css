@@ -1,0 +1,221 @@
+.selector {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* --- Colonne d'onglets --- */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.tab {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.15rem 1rem 1.15rem 0.35rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  transition: color 0.35s var(--ease);
+}
+
+/* Trait de sélection dégradé. */
+.tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--gradient);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 0.45s var(--ease);
+}
+
+.tabIndex,
+.tabTitle {
+  transition: transform 0.4s var(--ease);
+}
+
+.tabActive .tabIndex,
+.tabActive .tabTitle {
+  transform: translateX(0.75rem);
+}
+
+.tabActive {
+  color: var(--text);
+}
+
+.tabActive::before {
+  transform: scaleY(1);
+}
+
+.tabIndex {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--muted-dim);
+  transition: color 0.35s var(--ease);
+}
+
+.tabActive .tabIndex {
+  color: var(--cyan);
+}
+
+.tabTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.tabArrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.tabActive .tabArrow {
+  opacity: 1;
+  transform: none;
+  color: var(--cyan);
+}
+
+/* --- Panneau détaillé --- */
+
+.panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(52, 120, 255, 0.1), transparent 65%),
+    linear-gradient(160deg, var(--surface-2), var(--surface));
+  box-shadow: var(--shadow-md);
+  /* Hauteur minimale : le changement d'onglet ne fait pas sauter la page. */
+  min-height: 30rem;
+}
+
+.panelInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: panelIn 0.5s var(--ease-out) both;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+
+.panelIndex {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.panelTitle {
+  margin: 0;
+}
+
+.promise {
+  font-size: clamp(1rem, 1.5vw, 1.14rem);
+  line-height: 1.55;
+  color: var(--text);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.facts {
+  display: grid;
+  gap: 1.05rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border);
+}
+
+.fact dt {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+  margin-bottom: 0.35rem;
+}
+
+.fact dd {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+.objective {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(32, 216, 243, 0.28);
+  background: rgba(32, 216, 243, 0.07);
+  color: var(--text) !important;
+  font-size: 0.85rem !important;
+  font-weight: 500;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+@media (min-width: 900px) {
+  .selector {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fact:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 899px) {
+  .panel {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panelInner {
+    animation: none;
+  }
+}

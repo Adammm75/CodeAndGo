@@ -1,0 +1,687 @@
+/* ==========================================================================
+   CodeAndGo — feuille de style globale
+   1. Jetons de design      5. Boutons
+   2. Réinitialisation      6. Cartes & surfaces
+   3. Mise en page          7. Système de révélation au scroll
+   4. Typographie           8. Décors (grilles, halos) & utilitaires
+   ========================================================================== */
+
+/* 1. Jetons de design ---------------------------------------------------- */
+
+:root {
+  /* Fonds */
+  --bg: #050810;
+  --bg-deep: #02040a;
+  --surface: #09111f;
+  --surface-2: #0d1728;
+  --surface-3: #111d33;
+
+  /* Texte */
+  --text: #f5f7fb;
+  --muted: #a7b0c0;
+  --muted-dim: #7c8697;
+
+  /* Accents de marque */
+  --cyan: #20d8f3;
+  --blue: #3478ff;
+  --violet: #9250ff;
+
+  --gradient: linear-gradient(100deg, var(--cyan) 0%, var(--blue) 48%, var(--violet) 100%);
+  --gradient-soft: linear-gradient(
+    100deg,
+    rgba(32, 216, 243, 0.16) 0%,
+    rgba(52, 120, 255, 0.16) 48%,
+    rgba(146, 80, 255, 0.16) 100%
+  );
+
+  /* Bordures & voiles */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-strong: rgba(255, 255, 255, 0.055);
+
+  /* Ombres cinématographiques */
+  --shadow-sm: 0 2px 10px rgba(2, 4, 10, 0.5);
+  --shadow-md: 0 18px 44px -20px rgba(2, 4, 10, 0.9);
+  --shadow-lg: 0 48px 110px -48px rgba(2, 4, 10, 1);
+  --glow-cyan: 0 0 42px -8px rgba(32, 216, 243, 0.45);
+  --glow-violet: 0 0 42px -8px rgba(146, 80, 255, 0.45);
+
+  /* Typographie */
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-serif:
+    var(--font-playfair), 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia,
+    'Times New Roman', serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', 'JetBrains Mono', Consolas, monospace;
+
+  /* Rythme */
+  --container: 1240px;
+  --gutter: clamp(1.25rem, 4vw, 2.75rem);
+  --section-y: clamp(4.5rem, 9vw, 8.5rem);
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+
+  /* Mouvement */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.5s;
+
+  --header-h: 74px;
+
+  color-scheme: dark;
+}
+
+/* 2. Réinitialisation ----------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Pas de `scroll-behavior: smooth` global : Next l'appliquerait au retour en
+     haut de page à chaque navigation, ce qui donne une transition lente et
+     molle. Le défilement doux est déclenché ponctuellement, à la demande. */
+  scroll-padding-top: calc(var(--header-h) + 1.5rem);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+  /* Pas d'`overflow` sur <body> : cela casserait le rendu de l'en-tête fixe au
+     défilement et neutraliserait les colonnes `position: sticky`. Chaque
+     section qui laisse déborder un décor (halo, mot fantôme, bandeau cinétique)
+     porte son propre `overflow: hidden`. */
+}
+
+/* Empêche le décalage de mise en page quand le menu mobile verrouille le scroll. */
+body[data-scroll-locked='true'] {
+  overflow: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* L'outline épouse déjà le `border-radius` de l'élément : en imposer un ici
+   transformait les boutons pilules en rectangles dès qu'ils recevaient le
+   focus. */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(52, 120, 255, 0.35);
+  color: #fff;
+}
+
+/* 3. Mise en page --------------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--narrow {
+  max-width: 880px;
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+.section--tight {
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--border-strong) 30%, var(--border-strong) 70%, transparent);
+}
+
+/* 4. Typographie ---------------------------------------------------------- */
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 7.4vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+
+.lead {
+  font-size: clamp(1.02rem, 1.5vw, 1.22rem);
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.body {
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--gradient);
+  flex: none;
+}
+
+.eyebrow--plain::before {
+  display: none;
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--muted-dim);
+}
+
+/* 5. Boutons -------------------------------------------------------------- */
+
+.btn {
+  --btn-lift: 0px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 50px;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transform: translateY(var(--btn-lift));
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    background-color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.btn:hover {
+  --btn-lift: -2px;
+}
+
+.btn:active {
+  --btn-lift: 0px;
+}
+
+.btn--primary {
+  color: #fff;
+  background: var(--gradient);
+  box-shadow: 0 12px 34px -16px rgba(52, 120, 255, 0.9);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 18px 44px -16px rgba(52, 120, 255, 1);
+}
+
+.btn--ghost {
+  color: var(--text);
+  background: var(--glass);
+  border: 1px solid var(--border-strong);
+}
+
+.btn--ghost:hover {
+  background: var(--glass-strong);
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+.btn--sm {
+  min-height: 42px;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.85rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[aria-disabled='true'],
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  --btn-lift: 0px;
+}
+
+/* Lien texte avec soulignement animé. */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 500;
+  font-size: 0.94rem;
+  color: var(--text);
+  padding-block: 0.15rem;
+  border-bottom: 1px solid var(--border-strong);
+  transition: border-color 0.3s var(--ease);
+}
+
+.link-arrow:hover {
+  border-color: var(--cyan);
+}
+
+.link-arrow svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.link-arrow:hover svg {
+  transform: translateX(3px);
+}
+
+/* 6. Cartes & surfaces ---------------------------------------------------- */
+
+.panel {
+  position: relative;
+  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.badge-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.42rem 0.95rem 0.42rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--glass);
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.badge-dot::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(32, 216, 243, 0.18);
+  animation: pulse-dot 2.6s var(--ease) infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(32, 216, 243, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(32, 216, 243, 0);
+  }
+}
+
+/* Mention obligatoire sur les projets qui ne sont pas des références clients. */
+.demo-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.demo-flag::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--violet);
+  flex: none;
+}
+
+/* Animations perpétuelles : quatorze boucles tournent en permanence sur le
+   site (rotations, marquee, respiration des halos). Hors de l'écran, elles
+   n'apportent rien mais continuent d'occuper le compositeur — sur téléphone,
+   c'est autant d'images volées au défilement et de batterie consommée.
+   MotionDirector pose cette classe dès qu'un bloc quitte le champ. */
+[data-anim].anim-paused,
+[data-anim].anim-paused * {
+  animation-play-state: paused;
+}
+
+/* 7. Système de révélation au scroll -------------------------------------- */
+
+/* Pas de `will-change` ici : il promouvait en permanence les 66 blocs de la
+   page en calques distincts, au prix d'une mémoire et d'un travail de
+   composition considérables. La promotion est demandée ponctuellement, juste
+   avant l'animation, via la classe `is-entering` posée par MotionDirector. */
+/* Aucun `filter: blur()` ici. Mesuré sur la page d'accueil (67 blocs, un
+   défilement complet) : avec le flou, 11 images dépassaient 32 ms et la pire
+   atteignait 454 ms ; sans lui, 3 images et 123 ms au pire. Le flou impose une
+   passe de rendu hors écran par bloc et par image, l'opacité et la
+   translation restent elles entièrement sur le compositeur. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 0.42s var(--ease-out),
+    transform 0.42s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-entering {
+  will-change: opacity, transform;
+}
+
+.reveal--left {
+  transform: translate3d(-24px, 0, 0);
+}
+
+.reveal--right {
+  transform: translate3d(24px, 0, 0);
+}
+
+.reveal--scale {
+  transform: scale(0.965);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sous 900 px les colonnes sont empilées : un décalage latéral n'apporte rien
+   et dépasserait la largeur du document tant que le bloc n'est pas révélé. */
+@media (max-width: 900px) {
+  .reveal--left,
+  .reveal--right {
+    transform: translate3d(0, 18px, 0);
+  }
+}
+
+/* Filet de sécurité contre tout débordement horizontal résiduel.
+   `clip` (et non `hidden`) ne crée pas de conteneur de défilement : les
+   colonnes `position: sticky` continuent de fonctionner, et l'en-tête fixe,
+   situé hors de <main>, n'est pas concerné. */
+.page-main {
+  overflow-x: clip;
+}
+
+/* 8. Décors & utilitaires ------------------------------------------------- */
+
+/* Grille technique discrète, purement décorative. */
+.grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, #000 25%, transparent 78%);
+}
+
+.halo {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.halo--cyan {
+  background: radial-gradient(circle closest-side, rgba(32, 216, 243, 0.34), rgba(32, 216, 243, 0.11) 45%, transparent 78%);
+}
+
+.halo--violet {
+  background: radial-gradient(circle closest-side, rgba(146, 80, 255, 0.3), rgba(146, 80, 255, 0.1) 45%, transparent 78%);
+}
+
+.halo--blue {
+  background: radial-gradient(circle closest-side, rgba(52, 120, 255, 0.28), rgba(52, 120, 255, 0.09) 45%, transparent 78%);
+}
+
+/* Halo ambiant qui suit le pointeur (désactivé au clavier et sur tactile). */
+.pointer-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 620px;
+  height: 620px;
+  margin: -310px 0 0 -310px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(52, 120, 255, 0.1), transparent 62%);
+  transform: translate3d(var(--px, 50vw), var(--py, 50vh), 0);
+  /* Calque dédié : le halo suit le pointeur sans jamais repeindre la page. */
+  will-change: transform;
+  transition: opacity 0.6s var(--ease);
+}
+
+.pointer-glow.is-on {
+  opacity: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transform: translateY(-160%);
+  transition: transform 0.3s var(--ease);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Bloc éditorial clair — rupture volontaire avec le reste du site. */
+.invert {
+  --text: #0a0f1a;
+  --muted: #47526a;
+  --muted-dim: #6b7689;
+  --border: rgba(10, 15, 26, 0.1);
+  --border-strong: rgba(10, 15, 26, 0.18);
+  --glass: rgba(10, 15, 26, 0.03);
+  --glass-strong: rgba(10, 15, 26, 0.06);
+  background: linear-gradient(170deg, #f2f4f8 0%, #e7ebf3 100%);
+  color: var(--text);
+}
+
+/* 9. Mouvement réduit ----------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Le contenu doit rester intégralement lisible sans animation. */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .pointer-glow {
+    display: none;
+  }
+}
+
+/* Sur mobile, les grands flous coûtent cher : on les allège. */
+@media (max-width: 720px) {
+  .halo {
+    opacity: 0.38;
+  }
+
+  .pointer-glow {
+    display: none;
+  }
+
+}
+
+/* Cibles tactiles : au moins 44 px de haut sur les appareils sans pointeur fin,
+   et pas de survol persistant qui resterait « collé » après un appui. */
+@media (pointer: coarse) {
+  .btn--sm {
+    min-height: 44px;
+  }
+
+  /* Les liens flechés de fin de section mesuraient 31 px de haut : sous le
+     doigt, c'est une cible que l'on manque une fois sur trois. Le trait de
+     soulignement reste collé au texte, seule la zone sensible s'étend. */
+  .link-arrow {
+    padding-block: 0.62rem;
+    background-clip: content-box;
+  }
+
+  .tag {
+    padding: 0.4rem 0.75rem;
+  }
+
+  .btn:hover,
+  .btn:active {
+    --btn-lift: 0px;
+  }
+}

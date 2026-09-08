@@ -1,0 +1,261 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 120;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  /* `backdrop-filter` n'est volontairement pas dans cette liste : l'animer
+     force le navigateur à rec-composer l'arrière-plan flouté à chaque image
+     pendant 400 ms, juste au moment où la page défile. */
+  transition:
+    background-color 0.4s var(--ease),
+    border-color 0.4s var(--ease);
+}
+
+.isScrolled {
+  background: rgba(5, 8, 16, 0.72);
+  /* 10 px suffisent visuellement ; le coût du flou d'arrière-plan croît avec
+     le rayon, et cet en-tête est fixe au-dessus du contenu qui défile. */
+  backdrop-filter: blur(10px) saturate(140%);
+  border-bottom-color: var(--border);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--header-h);
+}
+
+/* Le logo est un élément flex : sans cette règle il se compresse sous sa
+   largeur intrinsèque et le nom se retrouve rogné en fin de ligne. */
+.bar > :first-child {
+  flex: none;
+}
+
+/* --- Navigation desktop --- */
+
+.nav {
+  display: none;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.navLink {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.7rem;
+  white-space: nowrap;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: color 0.28s var(--ease), background-color 0.28s var(--ease);
+}
+
+.navLink:hover {
+  color: var(--text);
+  background: var(--glass);
+}
+
+.navLink[aria-current='page'] {
+  color: var(--text);
+}
+
+.navLink[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: 0.8rem;
+  right: 0.8rem;
+  bottom: 0.2rem;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--gradient);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cta {
+  display: none;
+}
+
+/* --- Bouton menu --- */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--glass);
+  color: var(--text);
+  transition: background-color 0.28s var(--ease), border-color 0.28s var(--ease);
+}
+
+.toggle:hover {
+  background: var(--glass-strong);
+}
+
+/* --- Barre de progression de lecture --- */
+
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  width: 100%;
+  background: var(--gradient);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* --- Panneau mobile plein écran --- */
+
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 2rem) var(--gutter) calc(2rem + env(safe-area-inset-bottom));
+  background: linear-gradient(170deg, var(--bg-deep) 0%, #060d1c 55%, #0a0a1e 100%);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* L'attribut hidden doit l'emporter sur le display:flex ci-dessus. */
+.panel[hidden] {
+  display: none;
+}
+
+.panelOpen {
+  animation: panelIn 0.38s var(--ease-out) both;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.panelNav ul {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.panelNav li {
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  animation: itemIn 0.45s var(--ease-out) forwards;
+  animation-delay: calc(90ms + var(--i) * 45ms);
+}
+
+@keyframes itemIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.panelLink {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.05rem 0.25rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--text);
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.panelLink:hover,
+.panelLink[aria-current='page'] {
+  color: var(--cyan);
+  transform: translateX(0.65rem);
+}
+
+.panelFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.panelContact {
+  font-size: 0.95rem;
+  color: var(--muted);
+  transition: color 0.28s var(--ease);
+}
+
+.panelContact:hover {
+  color: var(--text);
+}
+
+/* --- Points de rupture --- */
+
+@media (min-width: 1000px) {
+  .nav,
+  .cta {
+    display: block;
+  }
+
+  .cta {
+    display: inline-flex;
+  }
+
+  .toggle,
+  .panel {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panelOpen,
+  .panelNav li {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Sur téléphone, `backdrop-filter` fait recomposer l'arrière-plan flouté à
+   chaque image pendant que la page défile sous un en-tête fixe : c'est le
+   poste le plus coûteux de la barre. Un fond presque opaque donne le même
+   résultat visuel pour un coût nul. */
+@media (pointer: coarse) {
+  .isScrolled {
+    background: rgba(5, 8, 16, 0.95);
+    backdrop-filter: none;
+  }
+}

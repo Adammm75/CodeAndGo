@@ -1,0 +1,82 @@
+.header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: calc(var(--header-h) + clamp(3rem, 7vw, 5.5rem));
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  background: radial-gradient(ellipse 110% 70% at 50% -20%, rgba(52, 120, 255, 0.14), transparent 62%);
+  border-bottom: 1px solid var(--border);
+}
+
+.halo {
+  width: 520px;
+  height: 520px;
+  top: -32%;
+  right: -12%;
+  opacity: 0.3;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.05rem;
+}
+
+.breadcrumb {
+  margin-bottom: 0.15rem;
+}
+
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+}
+
+.crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.crumbLink {
+  color: var(--muted-dim);
+  transition: color 0.3s var(--ease);
+}
+
+.crumbLink:hover {
+  color: var(--cyan);
+}
+
+.crumbSep {
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.crumbCurrent {
+  color: var(--muted);
+}
+
+.title {
+  font-size: clamp(2.2rem, 5.8vw, 4.2rem);
+  max-width: 20ch;
+}
+
+.lead {
+  max-width: 58ch;
+}
+
+.extra {
+  margin-top: 0.6rem;
+}
+
+/* Fil d'Ariane : 21 px de haut, c'est en dessous de ce que l'on vise au doigt.
+   Le pas de la liste est reduit pour que l'ensemble ne s'etire pas. */
+@media (pointer: coarse) {
+  .crumbLink {
+    display: inline-block;
+    padding-block: 0.6rem;
+  }
+}

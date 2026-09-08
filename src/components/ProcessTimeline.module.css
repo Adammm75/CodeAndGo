@@ -1,0 +1,187 @@
+.timeline {
+  position: relative;
+}
+
+/* --- Rail de progression --- */
+
+.rail {
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.railFill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, var(--cyan), var(--blue) 50%, var(--violet));
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 1.6s var(--ease-out) 0.15s;
+}
+
+.timeline:global(.is-visible) .railFill {
+  transform: scaleY(1);
+}
+
+/* --- Étapes --- */
+
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.9rem;
+  padding-left: 2rem;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: calc(0.2s + var(--i) * 0.12s);
+}
+
+.timeline:global(.is-visible) .step {
+  opacity: 1;
+  transform: none;
+}
+
+/* Point lumineux sur le rail. */
+.node {
+  position: absolute;
+  left: -2rem;
+  top: 4px;
+  width: 15px;
+  height: 15px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  display: grid;
+  place-items: center;
+}
+
+.node::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gradient);
+  transform: scale(0);
+  transition: transform 0.5s var(--ease-out);
+  transition-delay: calc(0.35s + var(--i) * 0.12s);
+}
+
+.timeline:global(.is-visible) .node::after {
+  transform: scale(1);
+  box-shadow: 0 0 12px 1px rgba(52, 120, 255, 0.55);
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--muted-dim);
+}
+
+.title {
+  color: var(--text);
+}
+
+.text {
+  font-size: 0.9rem;
+  line-height: 1.58;
+  color: var(--muted);
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+.output {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--cyan);
+}
+
+.output::before {
+  content: '';
+  width: 12px;
+  height: 1px;
+  background: currentColor;
+  flex: none;
+}
+
+/* --- Desktop : timeline horizontale --- */
+
+@media (min-width: 1000px) {
+  .rail {
+    left: 0;
+    right: 0;
+    top: 7px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .railFill {
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--cyan), var(--blue) 50%, var(--violet));
+  }
+
+  .timeline:global(.is-visible) .railFill {
+    transform: scaleX(1);
+  }
+
+  .steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding-left: 0;
+    padding-top: 2.6rem;
+  }
+
+  .step {
+    padding-right: 0.5rem;
+  }
+
+  .node {
+    left: 0;
+    top: -2.6rem;
+    margin-left: 0;
+  }
+
+  .text {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .railFill {
+    transform: none;
+    transition: none;
+  }
+
+  .step {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .node::after {
+    transform: scale(1);
+    transition: none;
+  }
+}

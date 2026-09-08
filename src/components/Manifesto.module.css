@@ -1,0 +1,125 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(10, 15, 26, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 15, 26, 0.035) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 20%, transparent 80%);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+}
+
+.eyebrow {
+  color: var(--muted-dim);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.eyebrow::before {
+  background: linear-gradient(90deg, var(--blue), var(--violet));
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  counter-reset: manifeste;
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.9rem, 2.5vw, 2rem);
+  padding-block: clamp(0.6rem, 1.6vw, 1.1rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.index {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.1vw, 0.82rem);
+  letter-spacing: 0.16em;
+  color: var(--muted-dim);
+}
+
+.phrase {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 9.5vw, 7rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  color: var(--text);
+}
+
+.accent {
+  background: linear-gradient(96deg, #1a8ff5 0%, #3478ff 45%, #8b3cff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.quick {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 3vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.014em;
+  color: var(--text);
+}
+
+.role {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.roleLabel {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.roleSlash {
+  color: var(--blue);
+  font-size: 1.1rem;
+}
+
+.roleText {
+  font-size: clamp(0.98rem, 1.6vw, 1.15rem);
+  color: var(--muted);
+}
+
+@media (min-width: 860px) {
+  .footer {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.5rem;
+  }
+
+  .role {
+    padding-bottom: 0.3rem;
+  }
+}

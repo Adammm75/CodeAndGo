@@ -1,0 +1,128 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(5rem, 11vw, 9.5rem);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+/* Grande lumière animée : forte présence, aucune perte de lisibilité. */
+.beam {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: min(1150px, 145vw);
+  aspect-ratio: 2 / 1;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 50%;
+  /* Trois dégradés radiaux suffisent à obtenir le halo : le `filter: blur()`
+     ajoutait une passe GPU très coûteuse sur un élément de cette taille. */
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(52, 120, 255, 0.26), transparent 70%),
+    radial-gradient(ellipse 46% 52% at 28% 45%, rgba(32, 216, 243, 0.2), transparent 70%),
+    radial-gradient(ellipse 46% 52% at 74% 55%, rgba(146, 80, 255, 0.22), transparent 70%);
+  opacity: 0.85;
+  animation: breathe 11s var(--ease) infinite;
+  pointer-events: none;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.09);
+    opacity: 0.9;
+  }
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+}
+
+.eyebrow {
+  color: var(--muted-dim);
+}
+
+.title {
+  max-width: 17ch;
+}
+
+.text {
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.alt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted-dim);
+}
+
+.altIcon {
+  color: var(--cyan);
+}
+
+.altLink {
+  color: var(--muted);
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 1px;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.altLink:hover {
+  color: var(--text);
+  border-color: var(--cyan);
+}
+
+@media (max-width: 720px) {
+  .beam {
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam {
+    animation: none;
+  }
+}
+
+/* Le telephone et l'e-mail sont les deux liens les plus utiles de ce bloc :
+   au doigt, ils mesuraient 23 px de haut. */
+@media (pointer: coarse) {
+  .alt {
+    flex-wrap: wrap;
+    row-gap: 0.15rem;
+  }
+
+  .altLink {
+    display: inline-block;
+    padding-block: 0.62rem;
+  }
+}
+
+/* Respiration du halo : un degrade de 1150 px recompose sans interruption. */
+@media (pointer: coarse) {
+  .beam {
+    animation: none;
+  }
+}

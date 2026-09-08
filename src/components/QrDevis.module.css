@@ -1,0 +1,55 @@
+.card {
+  display: none;
+}
+
+/* Affiché uniquement là où le geste a du sens : un pointeur fin, donc un
+   écran que l'on scanne avec un autre appareil. */
+@media (pointer: fine) {
+  .card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--glass);
+  }
+}
+
+/* Fond clair obligatoire : un QR code sombre sur fond sombre ne se lit pas. */
+.frame {
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 10px 30px -18px rgba(2, 4, 10, 1);
+}
+
+.code {
+  display: block;
+  width: 92px;
+  height: 92px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.note {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted-dim);
+  text-wrap: pretty;
+}

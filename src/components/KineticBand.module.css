@@ -1,0 +1,89 @@
+.band {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  background: var(--bg-deep);
+  border-block: 1px solid var(--border);
+}
+
+/* Léger angle : la bande traverse la page plutôt qu'elle ne s'y empile. */
+.rail {
+  overflow: hidden;
+  transform: rotate(-1.6deg) scale(1.05);
+  padding-block: 0.85rem;
+  background: linear-gradient(90deg, transparent, rgba(52, 120, 255, 0.05), transparent);
+  border-block: 1px solid var(--border);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Une séquence complète : la boucle est invisible. */
+    transform: translateX(-50%);
+  }
+}
+
+.sequence {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  padding-inline: clamp(0.7rem, 1.5vw, 1.3rem);
+}
+
+.word {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.6vw, 2.9rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(245, 247, 251, 0.42);
+  white-space: nowrap;
+  transition: color 0.4s var(--ease);
+}
+
+/* Un mot sur deux est plein, pour donner du relief à la bande. */
+.item:nth-child(odd) .word {
+  color: var(--text);
+  -webkit-text-stroke: 0;
+}
+
+.star {
+  flex: none;
+  color: var(--cyan);
+  filter: drop-shadow(0 0 6px rgba(32, 216, 243, 0.6));
+}
+
+.item:nth-child(even) .star {
+  color: var(--violet);
+  filter: drop-shadow(0 0 6px rgba(146, 80, 255, 0.6));
+}
+
+.band:hover .track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+
+  .rail {
+    mask-image: linear-gradient(90deg, #000 88%, transparent);
+  }
+}

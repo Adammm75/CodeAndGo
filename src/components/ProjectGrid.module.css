@@ -1,0 +1,38 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.15rem, 2.5vw, 1.85rem);
+}
+
+/* La carte doit remplir la cellule, y compris quand elle est enveloppée
+   par le conteneur de révélation. */
+.grid > * {
+  display: flex;
+}
+
+.grid > * > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.empty {
+  padding: clamp(2rem, 5vw, 3.5rem);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--glass);
+  color: var(--muted);
+  text-align: center;
+  max-width: 46ch;
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featuredSlot {
+    grid-column: 1 / -1;
+  }
+}

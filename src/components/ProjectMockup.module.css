@@ -1,0 +1,363 @@
+/* Maquettes de sites dessinées en CSS — aucune capture d'écran. */
+
+.mockup {
+  --accent: var(--cyan);
+  --accent-2: var(--blue);
+  position: relative;
+  aspect-ratio: 16 / 10;
+  padding: clamp(1rem, 3vw, 1.9rem) clamp(1rem, 3vw, 1.9rem) 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(165deg, #0b1526 0%, #060c18 100%);
+}
+
+.cyan {
+  --accent: var(--cyan);
+  --accent-2: var(--blue);
+}
+
+.blue {
+  --accent: var(--blue);
+  --accent-2: var(--cyan);
+}
+
+.violet {
+  --accent: var(--violet);
+  --accent-2: var(--blue);
+}
+
+.featured {
+  aspect-ratio: 16 / 8.5;
+}
+
+.glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  width: 90%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in srgb, var(--accent) 20%, transparent),
+    color-mix(in srgb, var(--accent) 6%, transparent) 50%,
+    transparent 80%
+  );
+  opacity: 0.7;
+  transition: opacity 0.6s var(--ease), transform 0.7s var(--ease-out);
+  pointer-events: none;
+}
+
+.window {
+  position: relative;
+  height: 100%;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid var(--border-strong);
+  border-bottom: 0;
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  box-shadow: 0 -14px 50px -26px rgba(2, 4, 10, 1);
+  overflow: hidden;
+  transform: translateY(6%);
+  transition: transform 0.7s var(--ease-out);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dot:first-child {
+  background: color-mix(in srgb, var(--accent) 65%, transparent);
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1.2vw, 11px);
+  padding: clamp(9px, 1.8vw, 16px);
+}
+
+/* --- Capture réelle (composant ProjectShot) --- */
+
+/* Barre d'adresse : rappelle qu'il s'agit d'un vrai site, pas d'une maquette. */
+.address {
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.01em;
+  color: var(--muted-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- Primitives partagées --- */
+
+.line {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.13);
+  flex: none;
+}
+
+.lineTitle {
+  height: 10px;
+  width: 70%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  opacity: 0.85;
+}
+
+.lineW80 {
+  width: 80%;
+}
+.lineW60 {
+  width: 60%;
+}
+.lineW40 {
+  width: 40%;
+}
+.lineW30 {
+  width: 30%;
+}
+.lineW20 {
+  width: 20%;
+  opacity: 0.6;
+}
+
+.rowSplit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pill {
+  display: block;
+  width: 52px;
+  height: 15px;
+  border-radius: 999px;
+  flex: none;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.block {
+  display: block;
+  width: 34%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  flex: none;
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--accent) 22%, transparent),
+    color-mix(in srgb, var(--accent-2) 16%, transparent)
+  );
+  border: 1px solid var(--border);
+}
+
+.trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 1.2vw, 10px);
+}
+
+.tile {
+  display: block;
+  height: clamp(20px, 4vw, 34px);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.032);
+  border: 1px solid var(--border);
+}
+
+.tile:nth-child(2) {
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+/* --- Boutique --- */
+
+.quad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(6px, 1.2vw, 10px);
+}
+
+.product {
+  display: block;
+  aspect-ratio: 3 / 4;
+  border-radius: 7px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--accent) 18%, transparent),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--border);
+}
+
+.product:nth-child(3) {
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--accent-2) 22%, transparent),
+    rgba(255, 255, 255, 0.03)
+  );
+}
+
+/* --- Tableau de bord --- */
+
+.dotRow {
+  display: flex;
+  gap: 4px;
+}
+
+.miniDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 1.2vw, 10px);
+}
+
+.metric {
+  display: block;
+  height: clamp(22px, 4.4vw, 36px);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.032);
+  border: 1px solid var(--border);
+}
+
+.metric:first-child {
+  border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.graph {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(5px, 1vw, 9px);
+  height: clamp(34px, 7vw, 58px);
+}
+
+.graphBar {
+  flex: 1;
+  border-radius: 3px 3px 1px 1px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  opacity: 0.75;
+}
+
+.graphBar:last-child {
+  opacity: 1;
+}
+
+/* --- Éditorial --- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(6px, 1.2vw, 10px);
+}
+
+.galleryCol {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 1.2vw, 10px);
+}
+
+.frame {
+  display: block;
+  flex: 1;
+  min-height: clamp(18px, 3.5vw, 30px);
+  border-radius: 7px;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent) 20%, transparent),
+    rgba(255, 255, 255, 0.028)
+  );
+  border: 1px solid var(--border);
+}
+
+.frameTall {
+  min-height: clamp(46px, 9vw, 76px);
+}
+
+/* --- Reflet & profondeur au survol (piloté par la carte parente) --- */
+
+.reflection {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.055) 45%,
+    transparent 62%
+  );
+  transform: translateX(-60%);
+  opacity: 0;
+  transition: transform 1s var(--ease-out), opacity 0.5s var(--ease);
+}
+
+/* La carte parente porte la classe globale stable `project-card`, ce qui
+   permet de piloter la profondeur de la maquette depuis le survol de la carte
+   sans dépendre d'un nom de classe généré par un autre module. */
+:global(.project-card):hover .window,
+:global(.project-card):focus-within .window {
+  transform: translateY(2%) scale(1.015);
+}
+
+:global(.project-card):hover .glow,
+:global(.project-card):focus-within .glow {
+  opacity: 0.85;
+  transform: translateX(-50%) translateY(6%);
+}
+
+:global(.project-card):hover .reflection,
+:global(.project-card):focus-within .reflection {
+  opacity: 1;
+  transform: translateX(60%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window,
+  .glow,
+  .reflection {
+    transition: none;
+  }
+
+  .reflection {
+    display: none;
+  }
+}

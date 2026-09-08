@@ -1,0 +1,455 @@
+.wizard {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+/* Champ leurre : retiré de l'affichage sans display:none, pour rester
+   rempli par les robots qui ignorent le CSS. */
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Barre d'étapes --- */
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.stepItem {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.stepButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  font-size: 0.8rem;
+  color: var(--muted-dim);
+  transition:
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease);
+}
+
+.stepButton:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+
+.stepDone {
+  color: var(--muted);
+  border-color: var(--border-strong);
+  cursor: pointer;
+}
+
+.stepDone:hover {
+  color: var(--text);
+}
+
+.stepCurrent {
+  color: var(--text);
+  border-color: transparent;
+  background: var(--gradient);
+  opacity: 1;
+}
+
+.stepNumber {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.stepCurrent .stepNumber {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.stepLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Panneau --- */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding: clamp(1.4rem, 3.5vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 90% 50% at 50% 0%, rgba(52, 120, 255, 0.09), transparent 60%),
+    linear-gradient(165deg, var(--surface-2), var(--surface));
+  box-shadow: var(--shadow-md);
+}
+
+.panelTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.panelTitle:focus-visible {
+  outline-offset: 6px;
+}
+
+.panelCount {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--muted-dim);
+}
+
+/* --- Groupes de choix --- */
+
+.fieldset {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.legend {
+  font-size: 0.94rem;
+  color: var(--muted);
+  padding: 0;
+  margin-bottom: 0.15rem;
+  text-wrap: pretty;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--glass);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    color 0.28s var(--ease),
+    border-color 0.28s var(--ease),
+    background-color 0.28s var(--ease);
+}
+
+.choice:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.choice input {
+  margin-top: 0.18rem;
+  width: 17px;
+  height: 17px;
+  flex: none;
+  accent-color: #3478ff;
+  cursor: pointer;
+}
+
+.choice:has(input:checked) {
+  color: var(--text);
+  border-color: rgba(52, 120, 255, 0.45);
+  background: rgba(52, 120, 255, 0.08);
+}
+
+.choice:has(input:focus-visible) {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* --- Champs texte --- */
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.full {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.required {
+  color: var(--cyan);
+}
+
+.hint {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--muted-dim);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: rgba(2, 4, 10, 0.5);
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: border-color 0.28s var(--ease), background-color 0.28s var(--ease);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 7rem;
+  line-height: 1.6;
+}
+
+/* Safari iOS zoome automatiquement la page des qu'un champ recoit le focus
+   avec une taille de texte inferieure a 16 px. Le visiteur se retrouve alors
+   sur une page agrandie qu'il doit repincer pour continuer. 0,95 rem valait
+   15,2 px : il manquait 0,8 px pour eviter ce comportement. */
+@media (pointer: coarse) {
+  .input,
+  .textarea {
+    font-size: 16px;
+  }
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--cyan);
+  background: rgba(2, 4, 10, 0.75);
+}
+
+.input[aria-invalid='true'],
+.textarea[aria-invalid='true'] {
+  border-color: #ff7a7a;
+}
+
+/* --- Erreurs --- */
+
+.error {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #ffb0b0;
+}
+
+.serverError {
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 122, 122, 0.35);
+  background: rgba(255, 122, 122, 0.08);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #ffc9c9;
+  text-wrap: pretty;
+}
+
+/* --- Récapitulatif --- */
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.recap {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+.recapRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.2rem;
+  padding-block: 0.7rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.recapRow dt {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+.recapRow dd {
+  font-size: 0.92rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.consentBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 0.87rem;
+  line-height: 1.55;
+  color: var(--muted);
+  cursor: pointer;
+  text-wrap: pretty;
+}
+
+.consent input {
+  margin-top: 0.2rem;
+  width: 17px;
+  height: 17px;
+  flex: none;
+  accent-color: #3478ff;
+  cursor: pointer;
+}
+
+/* --- Actions --- */
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* --- Écran de confirmation --- */
+
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: clamp(2.25rem, 6vw, 4rem) clamp(1.4rem, 4vw, 3rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(32, 216, 243, 0.28);
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(32, 216, 243, 0.12), transparent 62%),
+    linear-gradient(165deg, var(--surface-2), var(--surface));
+  text-align: center;
+}
+
+.doneIcon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--gradient);
+  color: #04070f;
+  box-shadow: var(--glow-cyan);
+}
+
+.doneTitle {
+  margin: 0;
+}
+
+.doneText {
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+.doneHint {
+  font-size: 0.85rem;
+  color: var(--muted-dim);
+}
+
+/* --- Points de rupture --- */
+
+@media (min-width: 700px) {
+  .choices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recapRow {
+    grid-template-columns: 12rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+}
+
+@media (max-width: 699px) {
+  .stepLabel {
+    display: none;
+  }
+
+  .stepItem {
+    flex: 0 0 auto;
+  }
+
+  .stepButton {
+    padding: 0.5rem;
+    justify-content: center;
+  }
+}
+
+/* Les onglets d'étape servent aussi à revenir en arrière : 38 px était juste
+   sous le seuil confortable au doigt. */
+@media (pointer: coarse) {
+  .stepButton {
+    min-height: 44px;
+  }
+}
