@@ -6,7 +6,8 @@ export type Plan = {
   readonly priceFrom: string | null;
   /** Ligne affichée sous le prix (ou à sa place quand il n'y a pas de montant public). */
   readonly priceNote: string;
-  readonly delay: string;
+  /** Délai indicatif. `null` pour ne pas l'afficher. */
+  readonly delay: string | null;
   readonly summary: string;
   readonly includes: readonly string[];
   readonly recommended: boolean;
@@ -19,7 +20,7 @@ export const plans: readonly Plan[] = [
     audience: 'Indépendants et jeunes structures qui ont besoin d’exister en ligne rapidement.',
     priceFrom: '230 €',
     priceNote: 'Paiement possible en plusieurs fois',
-    delay: '2 à 3 semaines',
+    delay: null,
     summary:
       'Un site vitrine concis, complet et immédiatement crédible, concentré sur une seule action : vous contacter.',
     includes: [

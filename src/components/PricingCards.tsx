@@ -28,7 +28,7 @@ export function PricingCards() {
                 <span className={styles.priceFrom}>{plan.priceFrom ? 'À partir de' : 'Budget'}</span>
                 <span className={styles.priceValue}>{plan.priceFrom ?? 'Sur devis'}</span>
                 <span className={styles.priceNote}>{plan.priceNote}</span>
-                <span className={styles.priceDelay}>{plan.delay}</span>
+                {plan.delay ? <span className={styles.priceDelay}>{plan.delay}</span> : null}
               </p>
 
               <p className={styles.summary}>{plan.summary}</p>
