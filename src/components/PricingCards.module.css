@@ -113,13 +113,6 @@
   color: transparent;
 }
 
-.priceUnit {
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
-  font-weight: 500;
-  letter-spacing: 0;
-}
-
 .priceNote {
   font-size: 0.82rem;
   line-height: 1.45;
