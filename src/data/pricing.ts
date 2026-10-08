@@ -39,7 +39,7 @@ export const plans: readonly Plan[] = [
     audience: 'PME et structures établies dont le site doit porter plusieurs offres.',
     priceFrom: '420 €',
     priceNote: 'Paiement possible en plusieurs fois',
-    delay: '3 à 5 semaines',
+    delay: null,
     summary:
       'Un site multi-pages structuré autour de vos différentes offres, avec un travail éditorial et SEO approfondi.',
     includes: [
