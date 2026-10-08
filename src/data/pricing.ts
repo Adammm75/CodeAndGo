@@ -2,15 +2,9 @@ export type Plan = {
   readonly slug: string;
   readonly name: string;
   readonly audience: string;
-  /**
-   * Mise en avant principale. On affiche d'abord la mensualité, beaucoup plus
-   * lisible qu'un montant global, et le total reste indiqué juste en dessous :
-   * rien n'est masqué, mais le premier chiffre lu n'est plus le plus gros.
-   */
-  readonly monthly: string | null;
-  /** Montant total. `null` quand l'offre est établie uniquement sur devis. */
+  /** Montant de départ. `null` quand l'offre est établie uniquement sur devis. */
   readonly priceFrom: string | null;
-  /** Ligne affichée à la place du prix quand il n'y a pas de montant public. */
+  /** Ligne affichée sous le prix (ou à sa place quand il n'y a pas de montant public). */
   readonly priceNote: string;
   readonly delay: string;
   readonly summary: string;
@@ -23,9 +17,8 @@ export const plans: readonly Plan[] = [
     slug: 'essentiel',
     name: 'Essentiel',
     audience: 'Indépendants et jeunes structures qui ont besoin d’exister en ligne rapidement.',
-    monthly: '130 €',
-    priceFrom: '390 €',
-    priceNote: 'soit 390 € au total, en 3 fois sans frais',
+    priceFrom: '230 €',
+    priceNote: 'Paiement possible en plusieurs fois',
     delay: '2 à 3 semaines',
     summary:
       'Un site vitrine concis, complet et immédiatement crédible, concentré sur une seule action : vous contacter.',
@@ -43,9 +36,8 @@ export const plans: readonly Plan[] = [
     slug: 'professionnel',
     name: 'Professionnel',
     audience: 'PME et structures établies dont le site doit porter plusieurs offres.',
-    monthly: '290 €',
-    priceFrom: '870 €',
-    priceNote: 'soit 870 € au total, en 3 fois sans frais',
+    priceFrom: '420 €',
+    priceNote: 'Paiement possible en plusieurs fois',
     delay: '3 à 5 semaines',
     summary:
       'Un site multi-pages structuré autour de vos différentes offres, avec un travail éditorial et SEO approfondi.',
@@ -67,7 +59,6 @@ export const plans: readonly Plan[] = [
     audience: 'E-commerce, refonte complexe, application métier ou intégration IA.',
     // Aucun montant affiché : le périmètre varie trop pour qu'un chiffre de
     // départ soit honnête, et un gros nombre isolé décourage avant l'échange.
-    monthly: null,
     priceFrom: null,
     priceNote: 'Chiffré ensemble après un premier échange, sans engagement',
     delay: 'À définir au cadrage',

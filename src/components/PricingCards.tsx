@@ -24,15 +24,9 @@ export function PricingCards() {
                 <p className={styles.audience}>{plan.audience}</p>
               </header>
 
-              {/* La mensualité est lue en premier, le total juste en dessous :
-                  l'information reste complète, elle est simplement présentée
-                  dans l'ordre où elle se comprend. */}
               <p className={styles.price}>
-                <span className={styles.priceFrom}>{plan.monthly ? 'À partir de' : 'Budget'}</span>
-                <span className={styles.priceValue}>
-                  {plan.monthly ?? 'Sur devis'}
-                  {plan.monthly ? <span className={styles.priceUnit}> / mois</span> : null}
-                </span>
+                <span className={styles.priceFrom}>{plan.priceFrom ? 'À partir de' : 'Budget'}</span>
+                <span className={styles.priceValue}>{plan.priceFrom ?? 'Sur devis'}</span>
                 <span className={styles.priceNote}>{plan.priceNote}</span>
                 <span className={styles.priceDelay}>{plan.delay}</span>
               </p>

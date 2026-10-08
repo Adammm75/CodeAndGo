@@ -13,7 +13,7 @@ import { breadcrumbJsonLd, faqJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata: Metadata = pageMetadata({
   title: 'Tarifs',
   description:
-    'Trois offres de création de site internet, à partir de 130 € par mois en 3 fois sans frais. Périmètre, délais et inclusions détaillés, devis gratuit.',
+    'Trois offres de création de site internet, à partir de 230 € en 3 fois sans frais. Périmètre, délais et inclusions détaillés, devis gratuit.',
   path: '/tarifs',
 });
 
